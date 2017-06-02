@@ -144,7 +144,7 @@
 
         var activitiesRef  = rootRef.child("activities")              // class : firebase.reference -> root.activity
         var favoritesRef   = rootRef.child("favorites")
-
+        var usersRef    = db.ref("users")
         var errorCallback  = function (msg){  alert(msg.message) }
 
         window.app = new Vue({
@@ -182,12 +182,16 @@
                 logout : function (){
                     // ASN REQ 3  : signOut here
                     // Release favritesRef's value listener or just simply calling window.location.reload().
-                    firebase.auth().signOut();
-                    window.location.reload();
+                    firebase.auth().signOut().then(function() {
+                      // Sign-out successful.
+                    }).catch(function(error) {
+                      // An error happened.
+                    });
                 },
-                // getUserData : function (userID){
-                //   return this.data.users[userID] || {}
-                // }
+
+                getUserData : function (userID){
+                  return this.data.users[userID] || {}
+                }
                 // ASN REQ 2 HINT: the two methods `editorCreateActivity` , `editorEditActivity` are used to open editor.
                 // you does not need to modify it.
                 editorCreateActivity: function(){
@@ -238,6 +242,7 @@
                     title:new_activity.title,
                     price:new_activity.price,
                     address:new_activity.address
+                     user : vm.data.currentUser.uid ?  vm.data.currentUser.uid   : null
                     }).catch(errorCallback);
 
                 },
@@ -276,17 +281,18 @@
                         usersRef
                           .child (userData.uid)
                           .update(userData)
-                          .catch(errorCallback)
+                          .catch(errorCallback);
 
                         // update vue to login status
-                        vm.$set(vm.data, "currentUser" , userData )
+                        vm.$set(vm.data.currentUser, "currentUser" , userData )
 
                       }else{
                         // update vue to logout status
-                        vm.$set(vm.data, "currentUser" ,null)
+                        vm.$set(vm.data.currentUser, "currentUser" ,null)
 
                       }
                     })
+
                       // ASN REQ 4 :
                       // listen on chages on favorite data of currentUser , and set it to vm.data.currentUser
 
