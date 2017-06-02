@@ -191,6 +191,7 @@
                     // ASN REQ 3  : signOut here
                     // Release favritesRef's value listener or just simply calling window.location.reload().
                     ffirebase.auth().signOut();
+                    window.location.reload();
                 },
 
                 // getUserData : function (userID){
@@ -246,7 +247,6 @@
                     title:new_activity.title,
                     price:new_activity.price,
                     address:new_activity.address
-                     
                     }).catch(errorCallback);
 
                 },
