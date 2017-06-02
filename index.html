@@ -182,16 +182,12 @@
                 logout : function (){
                     // ASN REQ 3  : signOut here
                     // Release favritesRef's value listener or just simply calling window.location.reload().
-                    firebase.auth().signOut().then(function() {
-                      // Sign-out successful.
-                    }).catch(function(error) {
-                      // An error happened.
-                    });
+                    ffirebase.auth().signOut();
                 },
 
-                getUserData : function (userID){
-                  return this.data.users[userID] || {}
-                },
+                // getUserData : function (userID){
+                //   return this.data.users[userID] || {}
+                // },
                 // ASN REQ 2 HINT: the two methods `editorCreateActivity` , `editorEditActivity` are used to open editor.
                 // you does not need to modify it.
                 editorCreateActivity: function(){
