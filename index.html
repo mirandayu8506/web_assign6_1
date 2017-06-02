@@ -190,7 +190,7 @@
                 logout : function (){
                     // ASN REQ 3  : signOut here
                     // Release favritesRef's value listener or just simply calling window.location.reload().
-                    ffirebase.auth().signOut();
+                    firebase.auth().signOut();
                     window.location.reload();
                 },
 
