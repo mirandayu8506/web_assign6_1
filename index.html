@@ -176,7 +176,14 @@
                 login : function (){
                     // ASN REQ 3 : merely singIn with fb here
                     var provider = new firebase.auth.FacebookAuthProvider();
-                    firebase.auth().signInWithPopup(provider).catch(errorCallback);
+
+                    firebase.auth().signInWithPopup(provider).then(function(result) {
+                  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                  var token = result.credential.accessToken;
+                  // The signed-in user info.
+                  var user = result.user;
+                  // ...
+                }).catch(errorCallback);
 
                 },
                 logout : function (){
@@ -280,11 +287,11 @@
                           .catch(errorCallback);
 
                         // update vue to login status
-                        vm.$set(vm.data.currentUser, "currentUser" , userData )
+                        vm.$set(vm.data, "currentUser" , userData )
 
                       }else{
                         // update vue to logout status
-                        vm.$set(vm.data.currentUser, "currentUser" ,null)
+                        vm.$set(vm.data, "currentUser" ,null)
 
                       }
                     })
